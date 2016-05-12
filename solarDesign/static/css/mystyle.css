@@ -1,0 +1,109 @@
+.empty{
+    height: 2000px;
+}
+.video-cover
+{
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #3c3c3c;
+    opacity:0.4;
+    z-index: 0;
+}
+.video-container
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+video{
+    position: absolute;
+    z-index: -1;
+    opacity: 1;
+    width: 100%;
+}
+.icon-bar
+{
+    background-color: #9acfea !important;
+}
+.logo{
+    width:  1200px;
+    max-width: 50%;
+    height: auto;
+    margin-top: 25.833333333%;
+    margin-left: 2%
+}
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+}
+
+.navbar-fixed-top .nav {
+    padding: 15px 0;
+}
+
+.navbar-fixed-top .navbar-brand {
+    padding: 0 15px;
+}
+
+@media(min-width:768px) {
+    body {
+        padding-top: 100px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+    }
+
+    .navbar-fixed-top .navbar-brand {
+        padding: 15px 0;
+    }
+}
+.navbar .navbar-nav > li > a {
+    color: #FFF;
+}
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus {
+    color: #FF5A09;
+}
+.navbar .navbar-nav > .active > a,
+.navbar .navbar-nav > .active > a:hover,
+.navbar .navbar-nav > .active > a:focus {
+    color: #FF5A09;
+}
+/* mobile version */
+.navbar .navbar-toggle {
+    border-color: #FFF;
+}
+.collapsing, .in {
+    background-color: #393939;
+}
+.navbar .navbar-toggle:hover,
+.navbar .navbar-toggle:focus {
+    background-color: #DDD;
+}
+.navbar {
+transition-duration: 1s;
+}
+#BTN{
+    width: 100%;
+    margin-top:auto;
+    border: 2px solid #9acfea;
+    border-radius: 0%;
+    color: #9acfea;
+    font-weight:bold;
+    background-color: transparent;
+    font-size: inherit;
+    overflow: hidden;
+    margin-top: 40%;
+    z-index: 1;
+}
+#BTN:hover{
+    background-color: #9acfea;
+    color: #000000;
+    border: 2px solid #000000;
+}
+#BTN{
+    transition-duration: 0.5s;
+}

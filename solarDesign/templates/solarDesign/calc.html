@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2> Enter the details </h2>
+    <form action="{% url 'greeNesto:pv_calculator' %}" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <input type="submit" value="Check Statistics" />
+    </form>
+</body>
+</html>
