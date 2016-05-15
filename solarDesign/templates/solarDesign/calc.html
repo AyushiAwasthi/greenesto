@@ -43,13 +43,13 @@
         </div>
         <div id="quote" class="row">
             <div class="col-sm-1 blank"></div>
-            <form action="{% url 'greenesto:calculator' %}" method="post" id="form" onsubmit="return validateForm()">
+            <form action="{% url 'greenesto:calculator' %}" method="post" name="form" onsubmit="return validateForm()">
                 {% csrf_token %}
                     <div class="col-sm-2">
                 <div class="form-group">
                     <label class="tag" for="pincode">PINCODE</label>
                     <div class="input-group">
-                        <input type="text" id="pincode" class="form-control" name="pincode" onkeypress="validatePincode();" required>
+                        <input type="text" id="pincode" class="form-control" name="pincode" onchange="validPincode();" required>
                         <div class="input-group-addon"><i class="fa fa-location-arrow symbol"></i></div>
                     </div>
 
@@ -59,7 +59,7 @@
                 <div class="form-group">
                     <label class="tag" for="bill">MONTHLY BILL</label>
                     <div class="input-group">
-                        <input type="text" id="bill" class="form-control" name="bill" value="">
+                        <input type="text" id="bill" class="form-control" name="bill" value="" onchange="validBill();">
                         <div class="input-group-addon"><span class="fa fa-rupee symbol"></span></div>
                     </div>
 
@@ -69,7 +69,7 @@
                 <div class="form-group">
                     <label class="tag" for="connection_load">CONNECTION LOAD</label>
                     <div class="input-group">
-                        <input type="text" id="connection_load" class="form-control" name="connection_load" value="" min="1" max="10">
+                        <input type="text" id="connection_load" class="form-control" name="connection_load" onchange="validConnectionLoad();">
                         <div class="input-group-addon"><span class="fa fa-lightbulb-o symbol"></span></div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                 <div class="form-group">
                     <label class="tag" for="area">ROOF AREA</label>
                     <div class="input-group">
-                        <input type="text" id="roof_area" class="form-control" name="roof_area" value="">
+                        <input type="text" id="roof_area" class="form-control" name="roof_area" onchange="validArea();">
                         <div class="input-group-addon"><span class="fa fa-home symbol"></span></div>
                     </div>
 
@@ -107,7 +107,7 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-6 col-xs-12">
                 <div class="saving_btn">
-                    <a href="#slide3" onclick="kk();" ><span>CHECK YOUR SAVINGS <i id="atag" class="fa fa-angle-double-down fa-2x"></i></span></a>
+                    <a href="#slide3"  ><span>CHECK YOUR SAVINGS <i id="atag" class="fa fa-angle-double-down fa-2x"></i></span></a>
                 </div>
             </div>
             <div class="col-sm-3"></div>
@@ -133,14 +133,50 @@
 
 </body>
 <script type="application/javascript">
-    var v = document.getElementById('pincode');
-    function validatePincode() {
-        if (v.value == "1"){
-            alert("Failed");
+    function validBill() {
+        var bill = document.forms['form']['bill'].value;
+        if (isNaN(bill) || bill == null){
+            $('#bill').css('border-color','#d50000');
+            $('#bill').css('box-shadow', '0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #d50000');
         }
         else{
-            alert("Passed");
+            $('#bill').css('border-color','transparent');
+            $('#bill').css('box-shadow', 'none');
         }
     }
+    function validPincode() {
+        var pincode = document.forms['form']['pincode'].value;
+        if (isNaN(pincode)){
+            $('#pincode').css('border-color','#d50000');
+            $('#pincode').css('box-shadow', '0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #d50000');
+        }
+        else{
+            $('#pincode').css('border-color','transparent');
+            $('#pincode').css('box-shadow', 'none');
+        }
+    }
+    function validConnectionLoad() {
+        var connection_load = document.forms['form']['connection_load'].value;
+        if (isNaN(connection_load)){
+            $('#connection_load').css('border-color','#d50000');
+            $('#connection_load').css('box-shadow', '0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #d50000');
+        }
+        else{
+            $('#connection_load').css('border-color','transparent');
+            $('#connection_load').css('box-shadow', 'none');
+        }
+    }
+    function validArea() {
+        var roof_area = document.forms['form']['roof_area'].value;
+        if (isNaN(roof_area)){
+            $('#roof_area').css('border-color','#d50000');
+            $('#roof_area').css('box-shadow', '0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #d50000');
+        }
+        else{
+            $('#roof_area').css('border-color','transparent');
+            $('#roof_area').css('box-shadow', 'none');
+        }
+    }
+
 </script>
 </html>
