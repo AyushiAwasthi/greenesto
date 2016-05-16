@@ -16,7 +16,10 @@
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Goudy+Bookletter+1911' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <title>Title</title>
 </head>
 <body>
@@ -114,69 +117,28 @@
         </div>
     </div>
     <div id="slide3" class="container">
-        {% if not none %}
-        <ul type="disc">
-            <li>System in Kw : <strong>{{ system_load }}</strong></li>
-            <li>System Cost in Rs : <strong>{{ system_cost }}</strong></li>
-            <li>Units generated in First year : <strong>{{ units_generated }}</strong></li>
-            <li>Units generated in 25 years : <strong>{{ units_in_25 }}</strong></li>
-            <li>Yearly Cost : <strong>{{ yearly_cost }}</strong></li>
-            <li>25 Years Savings : <strong>{{ saving_25 }}</strong></li>
-            <li>Payback Time : <strong>{{ payback }}</strong></li>
-            <li>1st Year Savings : <strong>{{ saving_1 }}</strong></li>
-            <li>RoofTop Area required : <strong>{{ rooftop }}</strong></li>
-            <li>Percentage of roof covered : <strong>{{ percentage_roof }}</strong></li>
-            <li>Number of Panels : <strong>{{ panels }}</strong></li>
-        </ul>
-        {% endif %}
+        <div class="row">
+            <div class="col-sm-4 col-xs-12" >
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div  class="col-sm-9" style="opacity: 0.8"><div id="billChart"></div></div>
+                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12" >
+                <div class="row">
+                    <div class="col-sm-12" id="Chart2" style="opacity: 0.8"></div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12" >
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-9" style="opacity: 0.8"><div id="Chart3"></div></div>
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
+            </div>
     </div>
-
+    <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
 </body>
-<script type="application/javascript">
-    function validBill() {
-        var bill = document.forms['form']['bill'].value;
-        if (isNaN(bill) || bill == null){
-            $('#bill').css('border-color','#d50000');
-            $('#bill').css('box-shadow', '0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #d50000');
-        }
-        else{
-            $('#bill').css('border-color','transparent');
-            $('#bill').css('box-shadow', 'none');
-        }
-    }
-    function validPincode() {
-        var pincode = document.forms['form']['pincode'].value;
-        if (isNaN(pincode)){
-            $('#pincode').css('border-color','#d50000');
-            $('#pincode').css('box-shadow', '0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #d50000');
-        }
-        else{
-            $('#pincode').css('border-color','transparent');
-            $('#pincode').css('box-shadow', 'none');
-        }
-    }
-    function validConnectionLoad() {
-        var connection_load = document.forms['form']['connection_load'].value;
-        if (isNaN(connection_load)){
-            $('#connection_load').css('border-color','#d50000');
-            $('#connection_load').css('box-shadow', '0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #d50000');
-        }
-        else{
-            $('#connection_load').css('border-color','transparent');
-            $('#connection_load').css('box-shadow', 'none');
-        }
-    }
-    function validArea() {
-        var roof_area = document.forms['form']['roof_area'].value;
-        if (isNaN(roof_area)){
-            $('#roof_area').css('border-color','#d50000');
-            $('#roof_area').css('box-shadow', '0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #d50000');
-        }
-        else{
-            $('#roof_area').css('border-color','transparent');
-            $('#roof_area').css('box-shadow', 'none');
-        }
-    }
-
-</script>
 </html>
