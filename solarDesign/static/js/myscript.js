@@ -84,8 +84,8 @@ function validBill() {
     }
 
 ////////////////////////////// Charts ////////////////////////////////////////
-new Morris.Line({
-    element: 'billChart',
+var chart = Morris.Line({
+    element: 'card1Background',
     data: [
         {year: '2008', a: 20,b: 0},
         {year: '2009', a: 10,b: 10},
@@ -97,8 +97,30 @@ new Morris.Line({
     ykeys: ['a','b'],
     labels: ['Series A', 'Series B'],
     lineColors: ['#e65100','#311b92']
-});
+    });
+newData=
+{
+    element: 'billChart',
+    data: [
+        {year: '2008', a: 20,b: 40},
+        {year: '2009', a: 10,b: 10},
+        {year: '2010', a: 30,b: 0},
+        {year: '2011', a: 20,b: 10},
+        {year: '2012', a: 40,b: 30}
+    ],
+    xkey: 'year',
+    ykeys: ['a','b'],
+    labels: ['Series A', 'Series B'],
+    lineColors: ['#e65100','#311b92']
+};
+function drawBillChart(newData)
+{
+    chart.setData(newData);
+}
 
+$(window).resize(function () {
+    drawBillChart(newData);
+});
 new Morris.Donut({
   element: 'Chart3',
   data: [

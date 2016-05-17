@@ -26,7 +26,7 @@
     <!--- Header Start ---->
     <header id="header">
         <div class="content">
-            <div id="logo" ><a href="#">greeNesto</a></div>
+            <div id="logo" ><a href="#">GreeNesto</a></div>
             <nav id="nav">
                 <ul>
                     <li><a href="#slide1" class="active" title="Next Section">Slide 1</a></li>
@@ -39,11 +39,6 @@
 
     <!------ Slides Start------>
     <div id="slide2" class="container">
-        <div class="row">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-6 col-xs-12"><h1 class="banner" >Choose Your Plan</h1></div>
-            <div class="col-sm-3"></div>
-        </div>
         <div id="quote" class="row">
             <div class="col-sm-1 blank"></div>
             <form action="{% url 'greenesto:calculator' %}" method="post" name="form" onsubmit="return validateForm()">
@@ -96,9 +91,6 @@
                             <input name="connectionType" class="connectionType1" id="option1" value="residential" checked="" type="radio">RESIDENTIAL
                         </label>
                         <label class="btn btn-default ">
-                            <input name="connectionType" class="connectionType1" id="option2" value="industrial" type="radio">INDUSTRIAL
-                        </label>
-                        <label class="btn btn-default ">
                             <input name="connectionType" class="connectionType1" id="option3" value="commercial" type="radio">COMMERCIAL
                         </label>
                     </div>
@@ -106,7 +98,24 @@
             </div>
             </form>
         </div>
-        <div id="quote" class="row">
+        <div class="row" style="padding-top: 30px;">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8" >
+                <div id="backTag"></div>
+                <div  id="frontTag"><h3 >" Let us turn to the sun to power our future "</h3></div>
+            </div>
+
+            <div class="col-sm-2"></div>
+        </div>
+        <!--<div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 col-xs-12"><h1 class="banner" >Choose Your Plan</h1></div>
+            <div class="col-sm-3"></div>
+        </div>-->
+
+    </div>
+    <div id="divider" class="container">
+        <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm-6 col-xs-12">
                 <div class="saving_btn">
@@ -117,28 +126,43 @@
         </div>
     </div>
     <div id="slide3" class="container">
-        <div class="row">
-            <div class="col-sm-4 col-xs-12" >
-                <div class="row">
-                    <div class="col-sm-2"></div>
-                    <div  class="col-sm-9" style="opacity: 0.8"><div id="billChart"></div></div>
-                    <div class="col-sm-1"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-6" >
+                            <div id="card1Background"></div>
+{#                            <div id="card1Chart"></div>#}
+                        </div>
+                        <div class="col-sm-6 col-xs-6" ><div id="card2Background"></div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12" ><div id="card4Background"></div></div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-12" ><div id="card3Background"></div></div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-4 col-xs-12" >
-                <div class="row">
-                    <div class="col-sm-12" id="Chart2" style="opacity: 0.8"></div>
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-12"><div id="card5Background"></div></div>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div id="card6Background"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-4 col-xs-12" >
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-9" style="opacity: 0.8"><div id="Chart3"></div></div>
-                    <div class="col-sm-2"></div>
-                </div>
-            </div>
-            </div>
+        </div>
     </div>
+    <footer class="footer"></footer>
     <script type="text/javascript" src="{% static 'js/myscript.js' %}"></script>
 </body>
 </html>
