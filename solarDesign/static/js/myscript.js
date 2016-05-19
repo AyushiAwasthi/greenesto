@@ -61,26 +61,52 @@ function validBill() {
 //     labels: ['Series A', 'Series B'],
 //     lineColors: ['#e65100','#311b92']
 //     });
-function drawBillChart()
-{
-    var value1 = document.forms['form']['bill'].value;
-    value1 = Number(value1);
-    var value2 = value1-400;
-    Morris.Line({
-    element: 'card1Chart',
-    data: [
-        {year: '2001', b: value1,a: value2},
-        {year: '2002', b: value1+200,a: value2+200},
-        {year: '2003', b: value1,a: value2-100},
-        {year: '2004', b: value1,a: value2+300},
-        {year: '2005', b: value1,a: value2-100}
-    ],
-    xkey: 'year',
-    ykeys: ['b','a'],
-    labels: ['Before', 'After'],
-    lineColors: ['black','white']
-    });
+function get_data(value) {
+    var ret=[];
+    for (var i=0;i<=5;i++){
+        var v = value+i;
+        ret.push({
+            x: i,
+            a: v,
+            b: (v*1.12).toFixed(2)
+        });
+    }
+    return ret;
 }
+ var graph = Morris.Line({
+    element: 'card1Chart',
+    data: get_data(2),
+    xkey: 'x',
+    ykeys: ['a','b'],
+    labels: ['Before', 'After'],
+    lineColors: ['black','white'],
+     parseTime: false,
+    });
+
+function update() {
+    graph.setData(get_data(3));
+}
+
+// function drawBillChart()
+// {
+//     var value1 = document.forms['form']['bill'].value;
+//     value1 = Number(value1);
+//     var value2 = value1-400;
+//     Morris.Line({
+//     element: 'card1Chart',
+//     data: [
+//         {year: '2001', b: value1,a: value2},
+//         {year: '2002', b: value1+200,a: value2+200},
+//         {year: '2003', b: value1,a: value2-100},
+//         {year: '2004', b: value1,a: value2+300},
+//         {year: '2005', b: value1,a: value2-100}
+//     ],
+//     xkey: 'year',
+//     ykeys: ['b','a'],
+//     labels: ['Before', 'After'],
+//     lineColors: ['black','white']
+//     });
+// }
 function getSystemCost() {
     var cost=0;
     var connection_load = document.forms['form']['connection_load'].value;
@@ -111,24 +137,54 @@ function drawSystemCost(cost) {
     document.getElementById('card2Chart').innerHTML = data1 + cost.toString() + data2;
 }
 $(function () {
-   drawBillChart();
+   //drawBillChart();
    drawSystemCost(getSystemCost());
 });
 
 function generateCharts() {
-    drawBillChart();
+    //drawBillChart();
     drawSystemCost(getSystemCost());
 }
-/*$(window).resize(function () {
-    drawBillChart();
-});*/
-/*
-new Morris.Donut({
-  element: 'Chart3',
+
+
+var donut = Morris.Donut({
+  element: 'card5Chart',
   data: [
-    {label: "Share 1", value: 12},
-    {label: "Share 2", value: 30}
+    {label: "Savings", value: 12},
+    {label: "Payable", value: 30}
   ],
     colors: ['#e65100','#311b92']
 });
-*/
+
+
+function get_1year_saving_units() {
+    var connection_load = document.forms['form']['connection_load'].value;
+    var bill = document.forms['form']['bill'].value;
+    var saving;
+    if ((bill*12)/8 < connection_load*1535)
+    {
+        saving = 100;
+    }
+    else
+    {
+        saving = ((1535*connection_load*8)/(bill*12))*100;
+        saving = saving.toFixed(2);
+    }
+    var ret = []
+    ret.push({
+        label: "Saving", value: saving
+    });
+    ret.push({
+        label: 'Payable', value: 100-saving
+    });
+    return ret;
+}
+
+function updateDonut() {
+    donut.setData(get_1year_saving_units());
+
+}
+$(window).resize(function () {
+    update(get_data(5));
+    updateDonut();
+});
