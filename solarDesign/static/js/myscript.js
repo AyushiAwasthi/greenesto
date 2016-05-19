@@ -1,40 +1,3 @@
-$(document).ready(function(){
-   var scroll_start = 0;
-   var startchange = $('.navbar');
-   var offset = startchange.offset();
-   $(document).scroll(function() {
-      scroll_start = $(this).scrollTop();
-      if(scroll_start > offset.top) {
-          $('.navbar').css('background-color', 'rgba(34,34,34,0.9)');
-       } else {
-          $('.navbar').css('background-color', 'transparent');
-       }
-   });
-    var height = $(".video-container").height();
-    $(".video-cover").css('height',height);
-});
-
-$(document).ready(function() {
-  $('a[href*=#]').each(function() {
-    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
-    && location.hostname == this.hostname
-    && this.hash.replace(/#/,'') ) {
-      var $targetId = $(this.hash), $targetAnchor = $('[name=' + this.hash.slice(1) +']');
-      var $target = $targetId.length ? $targetId : $targetAnchor.length ? $targetAnchor : false;
-       if ($target) {
-         var targetOffset = $target.offset().top;
-           
-        $(this).click(function() {
- $("#nav li a").removeClass("active");
- $(this).addClass('active');
-           $('html, body').animate({scrollTop: targetOffset}, 1000);
-           return false;
-         });
-      }
-    }
-  });
-
-});
 
 ////////////////////////  Saving Form Validating Functions /////////////////////////
 
@@ -84,43 +47,82 @@ function validBill() {
     }
 
 ////////////////////////////// Charts ////////////////////////////////////////
-var chart = Morris.Line({
-    element: 'card1Background',
+// var chart = Morris.Line({
+//     element: 'card1Chart',
+//     data: [
+//         {year: '2008', a: 20,b: 0},
+//         {year: '2009', a: 10,b: 10},
+//         {year: '2010', a: 30,b: 20},
+//         {year: '2011', a: 20,b: 10},
+//         {year: '2012', a: 40,b: 30}
+//     ],
+//     xkey: 'year',
+//     ykeys: ['a','b'],
+//     labels: ['Series A', 'Series B'],
+//     lineColors: ['#e65100','#311b92']
+//     });
+function drawBillChart()
+{
+    var value1 = document.forms['form']['bill'].value;
+    value1 = Number(value1);
+    var value2 = value1-400;
+    Morris.Line({
+    element: 'card1Chart',
     data: [
-        {year: '2008', a: 20,b: 0},
-        {year: '2009', a: 10,b: 10},
-        {year: '2010', a: 30,b: 20},
-        {year: '2011', a: 20,b: 10},
-        {year: '2012', a: 40,b: 30}
+        {year: '2001', b: value1,a: value2},
+        {year: '2002', b: value1+200,a: value2+200},
+        {year: '2003', b: value1,a: value2-100},
+        {year: '2004', b: value1,a: value2+300},
+        {year: '2005', b: value1,a: value2-100}
     ],
     xkey: 'year',
-    ykeys: ['a','b'],
-    labels: ['Series A', 'Series B'],
-    lineColors: ['#e65100','#311b92']
+    ykeys: ['b','a'],
+    labels: ['Before', 'After'],
+    lineColors: ['black','white']
     });
-newData=
-{
-    element: 'billChart',
-    data: [
-        {year: '2008', a: 20,b: 40},
-        {year: '2009', a: 10,b: 10},
-        {year: '2010', a: 30,b: 0},
-        {year: '2011', a: 20,b: 10},
-        {year: '2012', a: 40,b: 30}
-    ],
-    xkey: 'year',
-    ykeys: ['a','b'],
-    labels: ['Series A', 'Series B'],
-    lineColors: ['#e65100','#311b92']
-};
-function drawBillChart(newData)
-{
-    chart.setData(newData);
+}
+function getSystemCost() {
+    var cost=0;
+    var connection_load = document.forms['form']['connection_load'].value;
+    if(connection_load >=2 && connection_load <=10){
+        cost = connection_load * 90000 * 0.889
+    }
+    else if ( connection_load >=11 && connection_load <=29){
+        cost = connection_load * 90000 * 0.87
+    }
+    else if ( connection_load >=30 && connection_load <=39){
+        cost = connection_load * 90000 * 0.86
+    }
+    else if ( connection_load >=40 && connection_load <=79){
+        cost = connection_load * 90000 * 0.85
+    }
+    else if ( connection_load >=80 && connection_load <=100){
+        cost = connection_load * 90000 * 0.845
+    }
+    else{
+        alert("Please enter connection load between 1 to 100");
+    }
+    return cost;
 }
 
-$(window).resize(function () {
-    drawBillChart(newData);
+function drawSystemCost(cost) {
+    var data1 = "<h1 style=\"color: white; font-size: 20px; font-family: 'Wellfleet'; text-align: center\">System Cost</h1><h1 style=\"color: white; font-size: 60px; font-family: 'Wellfleet';text-align: center\"><span class=\"fa fa-rupee\"></span> ";
+    var data2 = "</h1>"
+    document.getElementById('card2Chart').innerHTML = data1 + cost.toString() + data2;
+}
+$(function () {
+   drawBillChart();
+   drawSystemCost(getSystemCost());
 });
+
+function generateCharts() {
+    drawBillChart();
+    drawSystemCost(getSystemCost());
+}
+/*$(window).resize(function () {
+    drawBillChart();
+});*/
+/*
 new Morris.Donut({
   element: 'Chart3',
   data: [
@@ -129,3 +131,4 @@ new Morris.Donut({
   ],
     colors: ['#e65100','#311b92']
 });
+*/

@@ -169,7 +169,7 @@ background-size: cover;
     overflow: hidden;
 }
 #slide3{
-    background:url('./../../static/images/light_pannels.jpg') 50% 0 no-repeat fixed;
+    background:url('./../../static/images/dark_pannels.jpg') 100% 0 no-repeat fixed;
     color: #fff;
     height: 700px;
     margin: 0;
@@ -295,13 +295,13 @@ input[type="color"]:focus,
     border-radius: 4px;
 }
 #card1Background,#card2Background,#card5Background{
-    width: 100%;
+    width: 90%;
     background-color: white;
     height: 200px;
     opacity: 0.4;
     border-radius: 4px;
-    /*position: absolute;*/
-    /*margin-right: 30px;*/
+    position: absolute;
+
 }
 #card3Background{
     width: 100%;
@@ -327,11 +327,13 @@ input[type="color"]:focus,
     border-radius: 4px;
     margin-bottom: 30px;
 }
-#card1Chart{
+#card1Chart,#card2Chart{
     height: 200px;
-    color: #FFF;
+    color: black;
     width: 100%;
     margin-right: 30px;
+    background-color: transparent;
+    overflow: hidden;
 }
 #backTag{
     width: 100%;
