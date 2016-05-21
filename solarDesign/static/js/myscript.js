@@ -28,10 +28,12 @@ function validBill() {
         if (isNaN(connection_load)){
             $('#connection_load').css('border-color','#d50000');
             $('#connection_load').css('box-shadow', '0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #d50000');
+            return -1;
         }
         else{
             $('#connection_load').css('border-color','transparent');
             $('#connection_load').css('box-shadow', 'none');
+            return connection_load
         }
     }
     function validArea() {
@@ -47,69 +49,39 @@ function validBill() {
     }
 
 ////////////////////////////// Charts ////////////////////////////////////////
-// var chart = Morris.Line({
-//     element: 'card1Chart',
-//     data: [
-//         {year: '2008', a: 20,b: 0},
-//         {year: '2009', a: 10,b: 10},
-//         {year: '2010', a: 30,b: 20},
-//         {year: '2011', a: 20,b: 10},
-//         {year: '2012', a: 40,b: 30}
-//     ],
-//     xkey: 'year',
-//     ykeys: ['a','b'],
-//     labels: ['Series A', 'Series B'],
-//     lineColors: ['#e65100','#311b92']
-//     });
-function get_data(value) {
+
+function get_25year_data() {
+    var connection_load = document.forms['form']['connection_load'].value;
+    var yearly_bill = document.forms['form']['bill'].value*12;
+    var yearly_saving_units;
+    if ((yearly_bill*12)/8 < connection_load*1535)
+    {
+        yearly_saving_units = 100;
+    }
+    else
+    {
+        yearly_saving_units = ((1535*connection_load*8)/(bill*12))*100;
+        yearly_saving_units = yearly_saving_units.toFixed(2);
+    }
+    var yearly_saving = yearly_saving_units*8;
+    var yearly_remaining = yearly_bill - yearly_saving;
+
     var ret=[];
-    for (var i=0;i<=5;i++){
-        var v = value+i;
+    for (var i=1;i<=5;i++){
+
         ret.push({
             x: i,
-            a: v,
-            b: (v*1.12).toFixed(2)
+            a: yearly_bill*i,
+            b: (yearly_remaining).toFixed(2)*i
         });
     }
     return ret;
 }
- var graph = Morris.Line({
-    element: 'card1Chart',
-    data: get_data(2),
-    xkey: 'x',
-    ykeys: ['a','b'],
-    labels: ['Before', 'After'],
-    lineColors: ['black','white'],
-     parseTime: false,
-    });
 
-function update() {
-    graph.setData(get_data(3));
-}
-
-// function drawBillChart()
-// {
-//     var value1 = document.forms['form']['bill'].value;
-//     value1 = Number(value1);
-//     var value2 = value1-400;
-//     Morris.Line({
-//     element: 'card1Chart',
-//     data: [
-//         {year: '2001', b: value1,a: value2},
-//         {year: '2002', b: value1+200,a: value2+200},
-//         {year: '2003', b: value1,a: value2-100},
-//         {year: '2004', b: value1,a: value2+300},
-//         {year: '2005', b: value1,a: value2-100}
-//     ],
-//     xkey: 'year',
-//     ykeys: ['b','a'],
-//     labels: ['Before', 'After'],
-//     lineColors: ['black','white']
-//     });
-// }
 function getSystemCost() {
     var cost=0;
     var connection_load = document.forms['form']['connection_load'].value;
+    alert(connection_load);
     if(connection_load >=2 && connection_load <=10){
         cost = connection_load * 90000 * 0.889
     }
@@ -128,6 +100,7 @@ function getSystemCost() {
     else{
         alert("Please enter connection load between 1 to 100");
     }
+    alert('cost is '+cost);
     return cost;
 }
 
@@ -136,25 +109,6 @@ function drawSystemCost(cost) {
     var data2 = "</h1>"
     document.getElementById('card2Chart').innerHTML = data1 + cost.toString() + data2;
 }
-$(function () {
-   //drawBillChart();
-   drawSystemCost(getSystemCost());
-});
-
-function generateCharts() {
-    //drawBillChart();
-    drawSystemCost(getSystemCost());
-}
-
-
-var donut = Morris.Donut({
-  element: 'card5Chart',
-  data: [
-    {label: "Savings", value: 12},
-    {label: "Payable", value: 30}
-  ],
-    colors: ['#e65100','#311b92']
-});
 
 
 function get_1year_saving_units() {
@@ -182,9 +136,90 @@ function get_1year_saving_units() {
 
 function updateDonut() {
     donut.setData(get_1year_saving_units());
+}
+
+function makeRoof(percentage) {
+    $('td').css('background-color','transparent');
+    var cells = Math.ceil(percentage/2);
+    var rows = Math.floor(cells/10);
+    var extra_cells = cells%10;
+    $('#roofTopText').text(percentage+'%');
+    for(var r=1;r<=rows;r++){
+        for (c=1;c<=10;c++){
+            var id = '#'+r.toString()+'-'+c.toString();
+            $(id).css('background-color','white');
+        }
+    }
+    rows++;
+    for (var c=1;c<=extra_cells;c++){
+        var id = '#'+rows.toString()+'-'+c.toString();
+            $(id).css('background-color','white');
+    }
+}
+
+function get_slider() {
+    $("#ex6").slider(); 
+    $("#ex6").on("slide", function(slideEvt) {
+	$("#ex6SliderVal").text(slideEvt.value+'kW');
+    });
+}
+
+function updateLine() {
+    graph.setData(get_25year_data());
+}
+
+function get_roof() {
+    var roof_area = document.forms['form']['roof_area'].value;
+    var connection_load = document.forms['form']['connection_load'].value;
+    var panel_area = connection_load*120;
+    return Math.ceil((panel_area/roof_area)*100);
+}
+//////////////////////////// Functions to be called when website is refreshed /////////////////////
+//// function called at start
+$(function () {
+    get_slider();
+    drawSystemCost(getSystemCost());
+    makeRoof(get_roof());
+});
+
+//// code to make line chart ////
+var graph = Morris.Line({
+     element: 'card4Chart',
+     data: get_25year_data(),
+     xkey: 'x',
+     ykeys: ['a','b'],
+     labels: ['Before', 'After'],
+     lineColors: ['black','white'],
+     parseTime: false,
+ });
+
+//// code to make donut chart ////
+var donut = Morris.Donut({
+    element: 'card5Chart',
+    data: [
+        {label: "Savings", value: 12},
+        {label: "Payable", value: 30}
+    ],
+    colors: ['#e65100','#311b92']
+});
+
+//////////////////////////// Function to be called when saving button is pressed /////////////////
+
+function generateCharts() {
+    get_slider();
+    drawSystemCost(getSystemCost());
+    updateLine(get_25year_data());
+    updateDonut();
+    makeRoof(get_roof());
+    alert('Make roof updated')
 
 }
+
+//////////////////////////// Function to be called when windows resizes /////////////////
+
 $(window).resize(function () {
-    update(get_data(5));
+    updateLine(get_25year_data());
     updateDonut();
 });
+
+

@@ -177,6 +177,7 @@ background-size: cover;
     background-size: cover;
     width: 100%;
     overflow: hidden;
+    
 }
 #quote{
     padding-top: 40px;
@@ -295,12 +296,14 @@ input[type="color"]:focus,
     border-radius: 4px;
 }
 #card1Background,#card2Background,#card5Background{
-    width: 90%;
+    width: 93%;
     background-color: white;
     height: 200px;
     opacity: 0.4;
     border-radius: 4px;
     position: absolute;
+    z-index: 0;
+    pointer-events: none;
 
 }
 #card3Background{
@@ -312,12 +315,16 @@ input[type="color"]:focus,
 }
 #card4Background{
     margin-top: 30px;
-    width: 100%;
+    width: 96%;
     background-color: white;
     height: 200px;
     opacity: 0.4;
     border-radius: 4px;
     margin-bottom: 30px;
+    margin-right: 30px;
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
 }
 #card6Background{
     width: 100%;
@@ -326,6 +333,9 @@ input[type="color"]:focus,
     opacity: 0.4;
     border-radius: 4px;
     margin-bottom: 30px;
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
 }
 #card1Chart,#card2Chart,#card5Chart{
     height: 200px;
@@ -334,6 +344,21 @@ input[type="color"]:focus,
     margin-right: 30px;
     background-color: transparent;
     overflow: hidden;
+}
+#card4Chart{
+    height: 200px;
+    width: 100%;
+    background-color: transparent;
+    overflow: hidden;
+    /*margin-right: 30px;*/
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+#card6Chart{
+    height: 200px;
+    width: 100%;
+    background-color: transparent;
+    margin-bottom: 30px;
 }
 #backTag{
     width: 100%;
@@ -374,9 +399,30 @@ input[type="color"]:focus,
     #card3Background{
         height: 300px;
     }
+
+    #card6Chart{
+        margin-top: 30px;
+    }
 }
 @media screen and (max-width: 401px) {
     .saving_btn{
         height: 90px;
     }
+}
+#ex1Slider .slider-selection {
+	background: #BABABA;
+}
+
+.col-sm-6 .img-responsive{
+    height: 100px;
+    width: 100px;
+    margin-left: 30px;
+}
+table{
+    margin-top: 8px;
+}
+td{
+    background-color: transparent;
+    height: 35px;
+    border-spacing: 4px;
 }
